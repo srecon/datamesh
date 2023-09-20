@@ -1,13 +1,13 @@
 package com.blu.cdp;
 
-import io.quarkus.runtime.Quarkus;
-import io.quarkus.runtime.QuarkusApplication;
-import io.quarkus.runtime.annotations.QuarkusMain;
 import io.quarkus.logging.Log;
 import org.postgresql.PGConnection;
 import org.postgresql.PGProperty;
 import org.postgresql.replication.PGReplicationStream;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -16,29 +16,38 @@ import java.sql.Connection;
 import java.util.concurrent.TimeUnit;
 
 /**
- * to run the app, execute the following
+ * to run the app, execute the following command
  * mvn compile exec:java -Dexec.mainClass="com.blu.cdp.PostgreSQLConsumer"
  * */
 public class PostgreSQLConsumer{
-    private static final String CONN_URL="jdbc:postgresql://localhost:5432/postgres";
+    //private static final String CONN_URL="jdbc:postgresql://localhost:5432/postgres";
     //@Override
     public static void main(String... args) throws Exception {
-        Log.info("PostgreSQL CDP consumer starts...");
+        System.out.println("PostgreSQL CDP consumer starts...");
+        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        //System.out.println("path;"+ rootPath);
+        InputStream is = new FileInputStream(rootPath+"application.properties");//PostgreSQLConsumer.class.getResourceAsStream(rootPath+"application.properties");
+
+        if(is == null){
+            throw new IOException("application.properties file not found");
+        }
+        Properties config = new Properties();
+        config.load(is);
 
         Properties props = new Properties();
-        PGProperty.USER.set(props, "postgres");
-        PGProperty.PASSWORD.set(props, "postgres");
+        PGProperty.USER.set(props, config.getProperty("db.user"));
+        PGProperty.PASSWORD.set(props, config.getProperty("db.password"));
         PGProperty.ASSUME_MIN_SERVER_VERSION.set(props, "9.4");
         PGProperty.REPLICATION.set(props, "database");
         PGProperty.PREFER_QUERY_MODE.set(props, "simple");
 
-        Connection con = DriverManager.getConnection(CONN_URL, props);
+        Connection con = DriverManager.getConnection(config.getProperty("db.url"), props);
         PGConnection replConnection = con.unwrap(PGConnection.class);
         // add replication slot
         replConnection.getReplicationAPI()
                 .createReplicationSlot()
                 .logical()
-                .withSlotName("demo_logical_slot_9")
+                .withSlotName("demo_logical_slot_"+ config.getProperty("repl.logical.slot"))
                 .withOutputPlugin("test_decoding")
                 .make();
 
@@ -46,7 +55,7 @@ public class PostgreSQLConsumer{
                 replConnection.getReplicationAPI()
                         .replicationStream()
                         .logical()
-                        .withSlotName("demo_logical_slot_9")
+                        .withSlotName("demo_logical_slot_"+ config.getProperty("repl.logical.slot"))
                         .withSlotOption("include-xids", true)
                         .withSlotOption("skip-empty-xacts", true)
                         .withStatusInterval(20, TimeUnit.SECONDS)
