@@ -10,3 +10,28 @@ SELECT * FROM pg_replication_slots;
 
 
 select pg_drop_replication_slot('demo_logical_slot_4');
+
+// publications
+Examples
+Create a publication that publishes all changes in two tables:
+
+CREATE PUBLICATION mypublication FOR TABLE users, departments;
+Create a publication that publishes all changes from active departments:
+
+CREATE PUBLICATION active_departments FOR TABLE departments WHERE (active IS TRUE);
+Create a publication that publishes all changes in all tables:
+
+CREATE PUBLICATION alltables FOR ALL TABLES;
+Create a publication that only publishes INSERT operations in one table:
+
+CREATE PUBLICATION insert_only FOR TABLE mydata
+WITH (publish = 'insert');
+Create a publication that publishes all changes for tables users, departments and all changes for all the tables present in the schema production:
+
+CREATE PUBLICATION production_publication FOR TABLE users, departments, TABLES IN SCHEMA production;
+Create a publication that publishes all changes for all the tables present in the schemas marketing and sales:
+
+CREATE PUBLICATION sales_publication FOR TABLES IN SCHEMA marketing, sales;
+Create a publication that publishes all changes for table users, but replicates only columns user_id and firstname:
+
+CREATE PUBLICATION users_filtered FOR TABLE users (user_id, firstname);

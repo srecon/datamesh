@@ -1,6 +1,7 @@
 package com.blu.cdp;
 
 import io.quarkus.logging.Log;
+import org.json.JSONObject;
 import org.postgresql.PGConnection;
 import org.postgresql.PGProperty;
 import org.postgresql.replication.PGReplicationStream;
@@ -20,7 +21,6 @@ import java.util.concurrent.TimeUnit;
  * mvn compile exec:java -Dexec.mainClass="com.blu.cdp.PostgreSQLConsumer"
  * */
 public class PostgreSQLConsumer{
-    //private static final String CONN_URL="jdbc:postgresql://localhost:5432/postgres";
     //@Override
     public static void main(String... args) throws Exception {
         System.out.println("PostgreSQL CDP consumer starts...");
@@ -43,6 +43,8 @@ public class PostgreSQLConsumer{
 
         Connection con = DriverManager.getConnection(config.getProperty("db.url"), props);
         PGConnection replConnection = con.unwrap(PGConnection.class);
+        // delete the previously created replication slot
+
         // add replication slot
         replConnection.getReplicationAPI()
                 .createReplicationSlot()
@@ -75,6 +77,7 @@ public class PostgreSQLConsumer{
             byte[] source = msg.array();
             int length = source.length - offset;
             System.out.println(new String(source, offset, length));
+
 
             //feedback by LOG sequence Number
             stream.setAppliedLSN(stream.getLastReceiveLSN());
