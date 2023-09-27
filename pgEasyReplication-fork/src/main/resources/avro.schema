@@ -1,0 +1,68 @@
+cidade.schema={\n" +
+                              "\n" +
+                              "  \"type\": \"record\",\n" +
+                              "\n" +
+                              "  \"name\": \"record0\",\n" +
+                              "\n" +
+                              "  \"fields\": [\n" +
+                              "\n" +
+                              "    {\n" +
+                              "\n" +
+                              "      \"name\": \"relationName\",\n" +
+                              "\n" +
+                              "      \"type\": \"string\"\n" +
+                              "\n" +
+                              "    },\n" +
+                              "\n" +
+                              "    {\n" +
+                              "\n" +
+                              "      \"name\": \"type\",\n" +
+                              "\n" +
+                              "      \"type\": \"string\"\n" +
+                              "\n" +
+                              "    },\n" +
+                              "\n" +
+                              "    {\n" +
+                              "\n" +
+                              "      \"name\": \"tupleData\",\n" +
+                              "\n" +
+                              "      \"type\": {\n" +
+                              "\n" +
+                              "        \"type\": \"record\",\n" +
+                              "\n" +
+                              "        \"name\": \"record\",\n" +
+                              "\n" +
+                              "        \"fields\": [\n" +
+                              "\n" +
+                              "          {\n" +
+                              "\n" +
+                              "            \"name\": \"codigo\",\n" +
+                              "\n" +
+                              "            \"type\": \"int\"\n" +
+                              "\n" +
+                              "          },\n" +
+                              "\n" +
+                              "          {\n" +
+                              "\n" +
+                              "            \"name\": \"nome\",\n" +
+                              "\n" +
+                              "            \"type\": \"string\"\n" +
+                              "\n" +
+                              "          },\n" +
+                              "          {\n" +
+                              "\n" +
+                              "            \"name\": \"data_fund\",\n" +
+                              "\n" +
+                              "            \"type\": \"string\"\n" +
+                              "\n" +
+                              "          }\n" +
+                              "\n" +
+                              "        ]\n" +
+                              "\n" +
+                              "      }\n" +
+                              "\n" +
+                              "    }\n" +
+                              "\n" +
+                              "  ]\n" +
+                              "\n" +
+                              "}
