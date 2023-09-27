@@ -35,3 +35,19 @@ CREATE PUBLICATION sales_publication FOR TABLES IN SCHEMA marketing, sales;
 Create a publication that publishes all changes for table users, but replicates only columns user_id and firstname:
 
 CREATE PUBLICATION users_filtered FOR TABLE users (user_id, firstname);
+
+====>
+CREATE PUBLICATION dept_filtered FOR TABLE public.dept (deptno,dname);
+CREATE PUBLICATION emp_filtered FOR TABLE public.emp (ename,job,deptno);
+
+===>
+BEGIN 779
+table public.dept: INSERT: deptno[integer]:144 dname[text]:'RESEARCH1' loc[text]:'DALLAS1'
+table public.dept: UPDATE: deptno[integer]:144 dname[text]:'refresh' loc[text]:'DALLAS1'
+table public.dept: DELETE: deptno[integer]:144
+COMMIT 779
+BEGIN 780
+table public.dept: INSERT: deptno[integer]:144 dname[text]:'RESEARCH1' loc[text]:'DALLAS1'
+table public.dept: UPDATE: deptno[integer]:144 dname[text]:'refresh' loc[text]:'DALLAS1'
+table public.dept: DELETE: deptno[integer]:144
+COMMIT 780

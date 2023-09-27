@@ -1,3 +1,10 @@
+# Features to add
+1. Create and update ```PUBLICATION``` with tables and columns
+2. Add plugins: pgoutput plugin
+3. Send events through Apache Pulsar
+4. Integration with Apache NIFI
+
+
 # cdp-consumer
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.

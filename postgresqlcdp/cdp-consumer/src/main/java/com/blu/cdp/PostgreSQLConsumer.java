@@ -1,5 +1,6 @@
 package com.blu.cdp;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.quarkus.logging.Log;
 import org.json.JSONObject;
 import org.postgresql.PGConnection;
@@ -9,9 +10,14 @@ import org.postgresql.replication.PGReplicationStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.util.Base64;
+import java.util.LinkedList;
 import java.util.Properties;
 import java.sql.Connection;
 import java.util.concurrent.TimeUnit;
