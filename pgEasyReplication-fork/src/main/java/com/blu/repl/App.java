@@ -17,7 +17,7 @@ public class App {
     private static final String database = "postgres"; 			// PostgreSQL database
     private static final String user = "postgres"; 			// PostgreSQL username
     private static final String password = ""; 				// PostgreSQL password
-    private static final String publication = "cidade_pub"; 		// PostgreSQL publication name
+    private static final String publication = "emp_pub"; 		// PostgreSQL publication name
     private static final String slot = "slot_teste_cidade_pub"; 		// PostgreSQL slot name (OPTIONAL, DEFAULT "easy_slot_" + publication name)
 
 
@@ -124,9 +124,9 @@ public class App {
             for (String data: cdcEvent){
                 System.out.println("[CDC event]: "+ data);
                 // convert to AVRO
-                JsonAvroConverter jsonAvroConverter = new JsonAvroConverter();
-                byte[] avro = jsonAvroConverter.convertToAvro(data.getBytes(), avroSchema);
-                System.out.println("[Avro]: "+ new String(avro));
+//                JsonAvroConverter jsonAvroConverter = new JsonAvroConverter();
+//                byte[] avro = jsonAvroConverter.convertToAvro(data.getBytes(), avroSchema);
+//                System.out.println("[Avro]: "+ new String(avro));
             }
 
         }
