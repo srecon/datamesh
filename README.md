@@ -4,7 +4,7 @@ The idea behind the projet is to implements a few tools and technics for replica
 According to the ```self-service data platform``` principle, the approch is to utilize the PostgreSQL logical replication technichs for replicating data from the source to the target.
 
 1. Project ```postgresqlcdp``` is my sandbox to study the PostgreSQL CDP mechanism.
-2. Project ```pgEasyReplication-fork``` is a forked project, already implemented the basic of the PostgreSQL CDC. With this project you can get all the DML events in JSON format. THe projet is avaiable here https://github.com/davyam/pgEasyReplication 
+2. Project ```pgEasyReplication-fork``` is a forked project, already implemented the basics of the PostgreSQL CDC. With this project you can get all the DML events in JSON format. The projet is avaiable here https://github.com/davyam/pgEasyReplication 
 
 Steps:
 
