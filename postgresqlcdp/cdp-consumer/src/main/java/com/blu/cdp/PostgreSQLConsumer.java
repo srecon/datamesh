@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.postgresql.PGConnection;
 import org.postgresql.PGProperty;
 import org.postgresql.replication.PGReplicationStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -27,17 +29,16 @@ import java.util.concurrent.TimeUnit;
  * mvn compile exec:java -Dexec.mainClass="com.blu.cdp.PostgreSQLConsumer"
  * */
 public class PostgreSQLConsumer{
+    private static final Logger logger = LoggerFactory.getLogger(PostgreSQLConsumer.class);
     //@Override
     public static void main(String... args) throws Exception {
-        System.out.println("PostgreSQL CDP consumer starts...");
+        logger.info("PostgreSQL CDP consumer starts...");
         String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         //System.out.println("path;"+ rootPath);
         InputStream is = new FileInputStream(rootPath+"application.properties");//PostgreSQLConsumer.class.getResourceAsStream(rootPath+"application.properties");
 
-        if(is == null){
-            throw new IOException("application.properties file not found");
-        }
         Properties config = new Properties();
+
         config.load(is);
 
         Properties props = new Properties();
@@ -82,7 +83,7 @@ public class PostgreSQLConsumer{
             int offset = msg.arrayOffset();
             byte[] source = msg.array();
             int length = source.length - offset;
-            System.out.println(new String(source, offset, length));
+            logger.info(new String(source, offset, length));
 
 
             //feedback by LOG sequence Number
