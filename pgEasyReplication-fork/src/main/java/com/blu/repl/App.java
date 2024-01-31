@@ -20,13 +20,13 @@ public class App {
     private static final String user = "shamim"; 			// PostgreSQL username
     private static final String password = "shamim"; 				// PostgreSQL password
     private static final String publication = "cidade_pub"; 		// PostgreSQL publication name
-    private static final String slot = "slot_teste_cidade_pub"; 		// PostgreSQL slot name (OPTIONAL, DEFAULT "easy_slot_" + publication name)
+    //private static final String slot = "slot_teste_cidade_pub"; 		// PostgreSQL slot name (OPTIONAL, DEFAULT "easy_slot_" + publication name)
 
     private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
 
-        //logger.info("Test PostgreSQL Logical replication!! CDC.");
+        logger.info("Test PostgreSQL Logical replication!! CDC.");
         // instate the PGEasyReplication class
         PGEasyReplication easyReplication = new PGEasyReplication(server, database, user, password, publication);
 
@@ -35,8 +35,7 @@ public class App {
         LinkedList<String> eventSnapshots = snapshots.getData();
         //print snapshot data
         for (String data : eventSnapshots){
-            //logger.info("[Snapshot Data]: "+ data);
-            System.out.println("[Snapshot Data]: " + data);
+            logger.info("[Snapshot Data]: "+ data);
         }
 
         // Capture the changed data
@@ -59,8 +58,7 @@ public class App {
             LinkedList<String> cdcEvent = cdc.getData();
 
             for (String data: cdcEvent){
-                //logger.info("[CDC event]: "+ data);
-                System.out.println("[CDC event]: " + data);
+                logger.info("[CDC event]: "+ data);
                 // convert to AVRO
 //                JsonAvroConverter jsonAvroConverter = new JsonAvroConverter();
 //                byte[] avro = jsonAvroConverter.convertToAvro(data.getBytes(), avroSchema);
