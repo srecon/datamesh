@@ -51,3 +51,21 @@ table public.dept: INSERT: deptno[integer]:144 dname[text]:'RESEARCH1' loc[text]
 table public.dept: UPDATE: deptno[integer]:144 dname[text]:'refresh' loc[text]:'DALLAS1'
 table public.dept: DELETE: deptno[integer]:144
 COMMIT 780
+
+#JsonB
+CREATE TABLE emp_jsonb(emp_id int NOT NULL, data jsonb);
+
+INSERT INTO emp_jsonb VALUES (1, '{"name": "John", "hobbies": ["Movies", "Football", "Hiking"]}');
+INSERT INTO emp_jsonb VALUES (2, '{"name": "John2", "hobbies": ["Diving", "Football", "Hiking"]}');
+INSERT INTO emp_jsonb VALUES (3, '{"name": "John3", "hobbies": ["Cycling", "Football", "Hiking"]}');
+INSERT INTO emp_jsonb VALUES (4, '{"name": "John4", "hobbies": ["Reading", "Football", "Hiking"]}');
+
+INSERT INTO emp_jsonb VALUES (5, '{"name": "John3", "hobbies": ["Cycling1", "Football", "Hiking"]}');
+
+#replication slot
+CREATE PUBLICATION emp_jsonb_pub FOR TABLE public.emp_jsonb where (data -> 'name' = '"John3"');
+
+#queries
+select data -> 'name' from emp_jsonb;
+
+SELECT * FROM emp_jsonb WHERE data -> 'name' = '"John3"';
